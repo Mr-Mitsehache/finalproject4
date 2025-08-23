@@ -1,0 +1,30 @@
+import { withAuth } from "next-auth/middleware";
+import type { NextRequest } from "next/server";
+
+
+export default withAuth(
+function middleware(req: NextRequest) {
+// You can add logging or custom handling here
+},
+{
+callbacks: {
+authorized: ({ token, req }) => {
+const { pathname } = req.nextUrl;
+// ต้อง login ก่อนเสมอสำหรับเส้นทางเหล่านี้
+if (pathname.startsWith("/dashboard") || pathname.startsWith("/admin") || pathname.startsWith("/organize")) {
+if (!token) return false;
+const role = (token as any).role as string | undefined;
+if (pathname.startsWith("/admin")) return role === "ADMIN"; // admin only
+if (pathname.startsWith("/organize")) return role === "ORGANIZE" || role === "ADMIN"; // organize or admin
+return true; // dashboard: any logged-in user
+}
+return true; // public paths
+},
+},
+}
+);
+
+
+export const config = {
+matcher: ["/dashboard/:path*", "/admin/:path*", "/organize/:path*"]
+};
