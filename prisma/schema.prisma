@@ -12,7 +12,6 @@ url = env("DATABASE_URL")
 enum Role {
 ADMIN
 ORGANIZE
-USER
 }
 
 
@@ -21,7 +20,8 @@ id String @id @default(cuid())
 name String?
 email String @unique
 password String? // hashed password (nullable if you later add OAuth)
-role Role @default(USER)
+role Role @default(ORGANIZE)
 createdAt DateTime @default(now())
 updatedAt DateTime @updatedAt
 }
+
