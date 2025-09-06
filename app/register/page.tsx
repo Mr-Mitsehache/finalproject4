@@ -6,7 +6,7 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("USER");
+  const [role,setRole] = useState("ORGANIZE");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function RegisterPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, role }),
       });
-      
+
       if (!res.ok) throw new Error((await res.json()).message);
       router.replace("/login");
     } catch (err: any) {

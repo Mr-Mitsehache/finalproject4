@@ -7,15 +7,23 @@
 npm i 
 npm run dev
 npx prisma migrate dev --name init
+npm run db:seed
 
 #MGoal:
-    1.Auth(S)
+    1.Auth(S)✅
+    2.DataBase(Succes)✅
     #--- User ---#
-    ✅  1.Homepage(S)
-    ⌛  2.Storepage(Now working)
-    🚫  3.Paymentpage(N)
+    1.Homepage(Working)
+    2.Storepage(Working)
+    3.Paymentpage(Working)
+
+    #--- Store ---#
+    1.Storepage(N)
+    2.Dashboardpage(N)
+    3.Managepage(N)
+    4.Task(N)
 
     #--- Admin ---#
-    🚫  1.1.Dashboardpage(N)
-    🚫  1.2.Managepage(N)
-    🚫  1.3.Verifypage(N)
+    1.Dashboardpage(N)
+    2.Managepage(N)
+    3.Verifypage(N)

@@ -1,27 +1,145 @@
+//schema.prisma
 generator client {
-provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
-
 
 datasource db {
-provider = "mysql"
-url = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
-
+// ---------- Role ----------
 enum Role {
-ADMIN
-ORGANIZE
+  ADMIN
+  ORGANIZE
 }
 
+// ---------- Enums ----------
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
 
+enum PaymentMethod {
+  PROMPTPAY
+  CASH
+}
+
+// ---------- Register ----------
 model User {
-id String @id @default(cuid())
-name String?
-email String @unique
-password String? // hashed password (nullable if you later add OAuth)
-role Role @default(ORGANIZE)
-createdAt DateTime @default(now())
-updatedAt DateTime @updatedAt
+  id       String  @id @default(cuid())
+  name     String?
+  email    String  @unique
+  password String? // hashed password (nullable if you later add OAuth)
+  role     Role    @default(ORGANIZE)
+
+  store Store?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
+// ---------- Models ----------
+model Store {
+  id           String  @id @default(cuid())
+  name         String  @unique
+  userId       String  @unique
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  phone        String
+  imageUrl     String?
+  address      String
+  lat          Float?
+  lng          Float?
+  hours        String? // "08:00 - 20:00"
+  isOpen       Boolean @default(true)
+  rating       Float   @default(0) // คำนวณเฉลี่ยจาก Review ก็ได้
+  reviewsCount Int     @default(0) //จำนวนรีวิว
+
+  // ความสัมพันธ์
+  services Service[]
+  reviews  Review[]
+  bookings Booking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isOpen, rating])
+}
+
+model Service {
+  id      String @id @default(cuid())
+  storeId String //เก็บ Foreign Key ชี้ไปที่ storeId
+  //เป็น object ที่ Prisma ใช้สร้าง relation ระหว่าง Service กับ Store
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  slug      String //ชื่อบริการบนลิงค์ URL
+  name      String //ชื่อบริการบนเว็บ UI
+  detail    String?
+  priceFrom Int?
+  priceTo   Int?
+
+  bookings Booking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // กัน slug ซ้ำในร้านเดียวกัน
+  @@unique([storeId, slug])
+  @@unique([id, storeId])
+}
+
+model Review {
+  id      String @id @default(cuid())
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  author    String
+  rating    Int // 1..5 (ตรวจสอบตอนสร้าง)
+  comment   String
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+}
+
+model Booking {
+  id      String @id @default(cuid())
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  serviceId String
+  service   Service @relation(fields: [serviceId, storeId], references: [id, storeId], onDelete: Restrict)
+
+  // ข้อมูลผู้จอง
+  customerName String
+  phone        String
+  email        String?
+
+  // รถ
+  carModel String
+  carPlate String
+  date     DateTime
+  note     String?
+
+  // สถานะ
+  status  BookingStatus @default(PENDING)
+  // 1-1 Payment (ฝั่งนี้เป็น back-relation)
+  payment Payment?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([storeId, date, carPlate, serviceId])
+  @@index([storeId, serviceId, status])
+  @@index([storeId, date])
+}
+
+model Payment {
+  id        String  @id @default(cuid())
+  bookingId String  @unique
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  method PaymentMethod
+  amount Int
+  paidAt DateTime?
+}
