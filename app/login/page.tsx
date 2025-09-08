@@ -22,8 +22,9 @@ export default function LoginPage() {
     setLoading(false);
     if (res?.error) {
       setError("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
+      return;
     } else {
-      router.replace("/admin");
+      router.replace("/post-login");
     }
   };
 

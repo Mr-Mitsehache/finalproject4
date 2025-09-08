@@ -15,14 +15,12 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-
     try {
       const res = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, role }),
       });
-
       if (!res.ok) throw new Error((await res.json()).message);
       router.replace("/login");
     } catch (err: any) {
