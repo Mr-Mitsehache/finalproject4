@@ -13,22 +13,25 @@ import Link from "next/link";
 import { ArrowLeft,} from "lucide-react";
 
 type Props = {
-  params: { id: string }
-  searchParams: { serviceId?: string }
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ serviceId?: string }>
 }
 
 export const revalidate = 0
 
 export default async function PaymentPage({ params, searchParams }: Props) {
-  const store = await getStoreById(params.id)
+  const { id } = await params
+  const sp = await searchParams
+  const serviceId = sp.serviceId ?? ''
+  const store = await getStoreById(id)
   if (!store) return redirect('/stores')
 
-  const service = store.services.find(s => s.id === searchParams.serviceId)
+  const service = store.services.find(s => s.id === serviceId)
   const defaultAmount = service?.priceFrom ?? 0
 
   async function createBookingAndPayment(formData: FormData) {
     'use server'
-    const storeId = params.id
+    const storeId = id
     const serviceId = String(formData.get('serviceId') ?? '')
     const customerName = String(formData.get('customerName') ?? '')
     const phone = String(formData.get('phone') ?? '')
@@ -89,7 +92,7 @@ export default async function PaymentPage({ params, searchParams }: Props) {
     <div className="container mx-auto max-w-3xl px-4 py-6">
       <div className="mb-4">
                 <Link
-                  href={`/stores/${params.id}`}
+                  href={`/stores/${id}`}
                   className="inline-flex items-center text-sm underline hover:no-underline"
                 >
                   <ArrowLeft className="mr-2 h-4 w-4" /> Back to stores

@@ -11,7 +11,7 @@ datasource db {
 // ---------- Role ----------
 enum Role {
   ADMIN
-  ORGANIZE
+  ORGANIZA
 }
 
 // ---------- Enums ----------
@@ -33,7 +33,7 @@ model User {
   name     String?
   email    String  @unique
   password String? // hashed password (nullable if you later add OAuth)
-  role     Role    @default(ORGANIZE)
+  role     Role    @default(ORGANIZA)
 
   store Store?
 
@@ -48,7 +48,7 @@ model Store {
   userId       String  @unique
   user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   phone        String
-  imageUrl     String?
+  imageUrl     String? @db.Text
   address      String
   lat          Float?
   lng          Float?

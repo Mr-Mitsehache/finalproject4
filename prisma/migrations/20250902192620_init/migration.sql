@@ -13,7 +13,7 @@ CREATE TABLE `Store` (
     `name` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
-    `role` ENUM('ADMIN', 'ORGANIZE') NOT NULL DEFAULT 'ORGANIZE',
+    `role` ENUM('ADMIN', 'ORGANIZA') NOT NULL DEFAULT 'ORGANIZA',
     `phone` VARCHAR(191) NOT NULL,
     `imageUrl` VARCHAR(191) NULL,
     `address` VARCHAR(191) NOT NULL,

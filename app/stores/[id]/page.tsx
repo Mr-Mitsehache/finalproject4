@@ -24,10 +24,11 @@ const heroBg =
 
 export const revalidate = 60
 
-type Props = { params: { id: string } }
+type Props = { params: Promise<{ id: string }> }
 
 export async function generateMetadata({ params }: Props) {
-  const store = await getStoreById(params.id)
+  const { id } = await params
+  const store = await getStoreById(id)
   if (!store) return { title: "Store not found" }
   return {
     title: `${store.name} Stores`,
@@ -36,7 +37,8 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function StorePage({ params }: Props) {
-  const store = await getStoreById(params.id)
+  const { id } = await params
+  const store = await getStoreById(id)
   if (!store) notFound()
 
   // --- server action: create review (keep if you'll render the form later) ---

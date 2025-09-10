@@ -1,3 +1,4 @@
+// app/login/page.tsx
 "use client";
 import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
@@ -14,18 +15,12 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    const res = await signIn("credentials", {
+    await signIn("credentials", {
+      redirect: true,
+      callbackUrl: "/post-login", // 👈 ให้วิ่งเข้า router กลาง
       email,
       password,
-      redirect: false,
     });
-    setLoading(false);
-    if (res?.error) {
-      setError("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
-      return;
-    } else {
-      router.replace("/post-login");
-    }
   };
 
   return (
