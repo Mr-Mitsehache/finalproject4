@@ -1,3 +1,4 @@
+//lib/auth.ts
 import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
@@ -48,3 +49,4 @@ export const authOptions: NextAuthOptions = {
     },
   },
 };
+

@@ -7,7 +7,7 @@ const schema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
   password: z.string().min(6),
-  role: z.enum(["ADMIN", "ORGANIZE", "USER"]).optional(),
+  role: z.enum(["ADMIN", "ORGANIZA", "USER"]).optional(),
 });
 
 export async function POST(req: Request) {
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     const hash = await bcrypt.hash(password, 12);
 
     await prisma.user.create({
-      data: { name, email, password: hash, role: role ?? "ORGANIZE" },
+      data: { name, email, password: hash, role: role ?? "ORGANIZA" },
     });
 
     return NextResponse.json({ message: "Registered" }, { status: 201 });

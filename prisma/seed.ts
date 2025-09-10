@@ -17,10 +17,10 @@ async function main() {
     data: { name: 'U',   email: 'admin@gmail.com', password: '$2b$12$21sUjsWvgTdfoEY44vt2Au4AE9DhWxhk.EIM9v7REuRAoxa3T1Clm', role: Role.ADMIN },
   });
   const fit   = await prisma.user.create({
-    data: { name: 'Fit', email: 'fit@gmail.com',   password: '123', role: Role.ORGANIZE },
+    data: { name: 'Fit', email: 'fit@gmail.com',   password: '$2b$12$21sUjsWvgTdfoEY44vt2Au4AE9DhWxhk.EIM9v7REuRAoxa3T1Clm', role: Role.ORGANIZA },
   });
   const shin  = await prisma.user.create({
-    data: { name: 'Shin', email: 'shin@gmail.com', password: '123', role: Role.ORGANIZE },
+    data: { name: 'Shin', email: 'shin@gmail.com', password: '$2b$12$21sUjsWvgTdfoEY44vt2Au4AE9DhWxhk.EIM9v7REuRAoxa3T1Clm', role: Role.ORGANIZA },
   });
 
   // 3) ร้าน

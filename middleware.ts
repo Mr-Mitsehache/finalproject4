@@ -1,3 +1,4 @@
+//middleware.ts
 import { withAuth } from "next-auth/middleware";
 import type { NextRequest } from "next/server";
 
@@ -11,15 +12,14 @@ export default withAuth(
         const { pathname } = req.nextUrl;
         // ต้อง login ก่อนเสมอสำหรับเส้นทางเหล่านี้
         if (
-          pathname.startsWith("/dashboard") ||
           pathname.startsWith("/admin") ||
-          pathname.startsWith("/organize")
+          pathname.startsWith("/organiza")
         ) {
           if (!token) return false;
           const role = (token as any).role as string | undefined;
           if (pathname.startsWith("/admin")) return role === "ADMIN"; // admin only
-          if (pathname.startsWith("/organize"))
-            return role === "ORGANIZE" || role === "ADMIN"; // organize or admin
+          if (pathname.startsWith("/organiza"))
+            return role === "ORGANIZA" || role === "ADMIN"; // organiza or admin
           return true; // dashboard: any logged-in user
         }
         return true; // public paths
@@ -29,5 +29,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/admin/:path*", "/organize/:path*"],
+  matcher: ["/admin/:path*", "/organiza/:path*"],
 };

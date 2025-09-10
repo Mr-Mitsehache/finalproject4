@@ -12,25 +12,26 @@ export const revalidate = 60; // ISR 1 นาที
 export default async function StoresPage({
   searchParams,
 }: {
-  searchParams?: {
+  searchParams?: Promise<{
     q?: string;
     open?: "0" | "1";
     sort?: "recommended" | "rating_asc" | "rating_desc";
     distance?: string;
     lat?: string;
     lng?: string;
-  };
+  }>;
 }) {
-  const q = searchParams?.q ?? "";
-  const sort = (searchParams?.sort as any) ?? "recommended";
-  const distance = searchParams?.distance
-    ? parseFloat(searchParams.distance)
+  const sp = await searchParams
+  const q = sp?.q ?? "";
+  const sort = (sp?.sort as any) ?? "recommended";
+  const distance = sp?.distance
+    ? parseFloat(sp.distance)
     : undefined;
-  const userLat = searchParams?.lat ? parseFloat(searchParams.lat) : undefined;
-  const userLng = searchParams?.lng ? parseFloat(searchParams.lng) : undefined;
+  const userLat = sp?.lat ? parseFloat(sp.lat) : undefined;
+  const userLng = sp?.lng ? parseFloat(sp.lng) : undefined;
 
   // default to open=true when not specified
-  const onlyOpen = searchParams?.open ? searchParams.open === "1" : true;
+  const onlyOpen = sp?.open ? sp.open === "1" : true;
 
   const { items, total } = await getStores({
     q,
