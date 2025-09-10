@@ -7,15 +7,25 @@
 npm i 
 npm run dev
 npx prisma migrate dev --name init
+npm run db:seed
 
 #MGoal:
-    1.Auth(S)
+    1.Auth(S)✅
+    2.DataBase(Succes)✅
+    3.Navbar() ปรับให้ล็อกอินแล้วแสดงTab ล็อกเอาท์ไม่ย้ายหน้า
+    4.post-login(/app/post-login) เพิ่มหน้าloading
     #--- User ---#
-    ✅  1.Homepage(S)
-    ⌛  2.Storepage(Now working)
-    🚫  3.Paymentpage(N)
+    1.Homepage(/app/store) เหลือตกแต่ง ย้ายไปเป็นหน้าแรก -> ( /app/ )
+    2.Storepage(/app/store/[id]) เหลื่อตกแต่ง ดึงข้อมูลมาให้ครบ 
+    3.Paymentpage(Working) เหลื่อตกแต่ง 
+
+    #--- Store ---#
+    1.Storepage(/app/organize/[id]) เหลื่อตกแต่ง ดึงข้อมูลมาให้ครบ แก้ใข้ได้ 
+    2.Dashboardpage(N)
+    3.Managepage(Working)
+    4.Task(N)
 
     #--- Admin ---#
-    🚫  1.1.Dashboardpage(N)
-    🚫  1.2.Managepage(N)
-    🚫  1.3.Verifypage(N)
+    1.Dashboardpage(N)
+    2.Managepage(N)
+    3.Verifypage(N)
