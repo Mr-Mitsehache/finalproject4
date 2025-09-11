@@ -31,6 +31,6 @@ npm run db:seed
     2.Managepage(N)
     3.Verifypage(N)
 
---เพิ่มเติม--
-# ล้างฐานข้อมูล + apply migrations ใหม่ทั้งหมด + รัน seed
+# เพิ่มเติม
+--> ล้างฐานข้อมูล + apply migrations ใหม่ทั้งหมด + รัน seed <--
 npx prisma migrate reset

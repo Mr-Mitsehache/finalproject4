@@ -14,7 +14,7 @@ const MIN_DISTANCE = 0
 const MAX_DISTANCE = 20
 const STEP = 1
 
-export function StoreFilters({ basePath = '/stores' }: { basePath?: string }) {
+export function StoreFilters({ basePath = '/' }: { basePath?: string }) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
