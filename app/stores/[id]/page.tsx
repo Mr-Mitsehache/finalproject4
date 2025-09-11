@@ -19,9 +19,6 @@ import { Navbar } from "@/components/navbar"
 // ✅ import Prisma type for the card
 import type { Service as ServiceModel } from "@prisma/client"
 
-const heroBg =
-  "url('https://images.unsplash.com/photo-1617957743091-51f7d6e7b5d7?q=80&w=1920&auto=format&fit=crop')"
-
 export const revalidate = 60
 
 type Props = { params: Promise<{ id: string }> }
@@ -61,7 +58,7 @@ export default async function StorePage({ params }: Props) {
       <section className="relative">
         <div
           className="relative overflow-hidden rounded-none md:rounded-2xl"
-          style={{ backgroundImage: heroBg }}
+          style={{ }}
         >
           <div className="absolute inset-0 bg-black/60 md:bg-gradient-to-r md:from-black/70 md:to-black/20" />
           <div className="relative z-10 container mx-auto max-w-6xl px-4 py-10 md:py-16">
@@ -177,7 +174,7 @@ function ServiceCard({
         {(svc.priceFrom != null || svc.priceTo != null) && (
           <div className="mt-1 text-2xl font-extrabold tabular-nums">
             ฿{(svc.priceFrom ?? 0).toLocaleString()}
-            {svc.priceTo != null ? `–${svc.priceTo.toLocaleString()}` : ""}
+            {svc.priceTo != null ? `${svc.priceTo.toLocaleString()}` : ""}
           </div>
         )}
       </CardContent>
