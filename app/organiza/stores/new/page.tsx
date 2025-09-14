@@ -1,3 +1,4 @@
+//app\organiza\stores\new\page.tsx
 import { StoreForm } from '@/components/organiza/store-form'
 import { createStoreAction } from '../actions'
 import { requireOrgUser } from '@/lib/auth-helpers'

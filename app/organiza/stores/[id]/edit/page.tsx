@@ -1,3 +1,4 @@
+//app\organiza\stores\[id]\edit\page.tsx
 import { prisma } from '@/lib/prisma'
 import { requireOrgUser } from '@/lib/auth-helpers'
 import { notFound } from 'next/navigation'

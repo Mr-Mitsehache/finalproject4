@@ -1,3 +1,4 @@
+//components\admin\admin-tabs.tsx
 'use client'
 
 import Link from 'next/link'

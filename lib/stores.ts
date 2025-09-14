@@ -1,4 +1,4 @@
-// data/stores.ts
+// lib\stores.ts
 export type BusinessHours = {
   day: 'อาทิตย์' | 'จันทร์' | 'อังคาร' | 'พุธ' | 'พฤหัสบดี' | 'ศุกร์' | 'เสาร์';
   open: string;   // "08:00"

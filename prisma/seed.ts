@@ -1,3 +1,4 @@
+//prisma\seed.ts
 import { PrismaClient, Role, BookingStatus, PaymentMethod } from '@prisma/client';
 const prisma = new PrismaClient();
 
@@ -29,7 +30,7 @@ async function main() {
       name: 'Goofitre Car Care Central',
       userId: fit.id,
       phone: '02-123-4567',
-      imageUrl: '/placeholder.svg',
+      imageUrl: 'https://play-lh.googleusercontent.com/Ksu9G-MiVDn3X0cGUHmLuYk06katL4i191qRfGzzuW2nrh0KCfvpjr7RqPZqd7I376l3',
       address: 'ตำบลหน้าถ้ำ อำเภอเมืองยะลา ยะลา 95000',
       lat: 6.532765,   lng: 101.222627,
       hours: '08:00 - 20:00',
@@ -44,7 +45,7 @@ async function main() {
       name: 'Premium Shine Studio',
       userId: shin.id,
       phone: '02-987-6543',
-      imageUrl: '/placeholder.svg',
+      imageUrl: 'https://play-lh.googleusercontent.com/Ksu9G-MiVDn3X0cGUHmLuYk06katL4i191qRfGzzuW2nrh0KCfvpjr7RqPZqd7I376l3',
       address: '133 ถนน เทศบาล 3 สะเตง อำเภอเมืองยะลา ยะลา 95000',
       lat: 6.548923988325412,  lng: 101.28858911032502,
       hours: '09:00 - 21:00',
@@ -102,9 +103,9 @@ async function main() {
   // 5) รีวิว
   await prisma.review.createMany({
     data: [
-      { storeId: s1.id, author: 'Narin K.', rating: 5, comment: 'ล้างละเอียด เงาวับ', date: new Date('2025-08-20') },
-      { storeId: s1.id, author: 'Ploy S.',  rating: 5, comment: 'คุ้มราคา งานเนียน',   date: new Date('2025-08-10') },
-      { storeId: s2.id, author: 'Beam J.',  rating: 5, comment: 'เซรามิกเงามาก',       date: new Date('2025-08-18') },
+      { storeId: s1.id, author: 'Narin K.', rating: 5, comment: 'ล้างละเอียด เงาวับ', date: new Date('2025-08-20'), mediaUrl:'https://tse1.mm.bing.net/th/id/OIP.rT3VZDprH1C8ep5DqVgbyAHaE7?rs=1&pid=ImgDetMain&o=7&rm=3',mediaKind:'IMAGE',},
+      { storeId: s1.id, author: 'Ploy S.',  rating: 5, comment: 'คุ้มราคา งานเนียน',   date: new Date('2025-08-10'), mediaUrl:'https://tse1.mm.bing.net/th/id/OIP.rT3VZDprH1C8ep5DqVgbyAHaE7?rs=1&pid=ImgDetMain&o=7&rm=3',mediaKind:'IMAGE',},
+      { storeId: s2.id, author: 'Beam J.',  rating: 5, comment: 'เซรามิกเงามาก',       date: new Date('2025-08-18'), mediaUrl:'https://tse1.mm.bing.net/th/id/OIP.rT3VZDprH1C8ep5DqVgbyAHaE7?rs=1&pid=ImgDetMain&o=7&rm=3',mediaKind:'IMAGE',},
     ],
   });
 

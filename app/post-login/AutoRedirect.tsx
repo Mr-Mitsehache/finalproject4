@@ -1,7 +1,4 @@
-// ===============================
-// File: app/post-login/AutoRedirect.tsx
-// Client Component: ทำการ redirect หลังจาก hydrate (เห็น skeleton แน่นอน)
-// ===============================
+//app\post-login\AutoRedirect.tsx
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";

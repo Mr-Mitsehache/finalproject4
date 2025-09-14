@@ -1,5 +1,5 @@
+//app\admin\actions.ts
 'use server'
-
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { requireAdmin } from '@/lib/auth-helpers'

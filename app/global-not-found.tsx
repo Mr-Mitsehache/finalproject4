@@ -1,4 +1,4 @@
-// app/stores/[id]/not-found.tsx
+// app/globalnot-found.tsx
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import "./globals.css";

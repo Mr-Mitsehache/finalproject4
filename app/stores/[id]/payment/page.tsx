@@ -1,3 +1,4 @@
+//app\stores\[id]\payment\page.tsx
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'

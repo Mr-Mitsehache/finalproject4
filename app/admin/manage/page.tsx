@@ -1,3 +1,4 @@
+//app\admin\manage\page.tsx
 import Link from 'next/link'
 import { requireAdmin } from '@/lib/auth-helpers'
 import { prisma } from '@/lib/prisma'

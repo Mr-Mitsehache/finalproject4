@@ -1,3 +1,4 @@
+//app\post-login\page.tsx
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import AutoRedirect from "./AutoRedirect";

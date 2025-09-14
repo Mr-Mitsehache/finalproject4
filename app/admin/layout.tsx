@@ -1,3 +1,4 @@
+//app\admin\layout.tsx
 import type { ReactNode } from 'react'
 import { requireAdmin } from '@/lib/auth-helpers'
 import { Navbar } from '@/components/navbar'
