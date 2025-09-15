@@ -1,39 +1,49 @@
-//components\organiza\service-form.tsx
-'use client'
+//
+"use client";
 
-import { useActionState, useEffect, useState } from 'react'
-import type { Service } from '@prisma/client'
-import type { ServiceFormState } from '@/app/organiza/services/actions'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
+import { useActionState, useEffect, useState } from "react";
+import type { Service } from "@prisma/client";
+import type { ServiceFormState } from "@/app/organiza/services/actions";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 function slugify(s: string) {
-  return s.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+  return s
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
 }
 
 export function ServiceForm({
   action,
   defaultValues,
-  submitText = 'บันทึกบริการ',
+  submitText = "บันทึกบริการ",
 }: {
-  action: (prev: ServiceFormState, formData: FormData) => Promise<ServiceFormState>
-  defaultValues?: Partial<Service>
-  submitText?: string
+  action: (
+    prev: ServiceFormState,
+    formData: FormData
+  ) => Promise<ServiceFormState>;
+  defaultValues?: Partial<Service>;
+  submitText?: string;
 }) {
-  const [state, formAction, isPending] = useActionState(action, {} as ServiceFormState)
+  const [state, formAction, isPending] = useActionState(
+    action,
+    {} as ServiceFormState
+  );
 
-  const [img, setImg] = useState(defaultValues?.imageUrl ?? '')
-  const [vid, setVid] = useState(defaultValues?.videoUrl ?? '')
-  const [name, setName] = useState(defaultValues?.name ?? '')
-  const [slug, setSlug] = useState(defaultValues?.slug ?? '')
+  const [img, setImg] = useState(defaultValues?.imageUrl ?? "");
+  const [vid, setVid] = useState(defaultValues?.videoUrl ?? "");
+  const [name, setName] = useState(defaultValues?.name ?? "");
+  const [slug, setSlug] = useState(defaultValues?.slug ?? "");
 
   useEffect(() => {
     if (!defaultValues?.slug && name && !slug) {
-      setSlug(slugify(name))
+      setSlug(slugify(name));
     }
-  }, [name, slug, defaultValues?.slug])
+  }, [name, slug, defaultValues?.slug]);
 
   return (
     <form action={formAction} className="space-y-5">
@@ -51,7 +61,13 @@ export function ServiceForm({
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="grid gap-2">
           <Label htmlFor="name">ชื่อบริการ</Label>
-          <Input id="name" name="name" value={name} onChange={e => setName(e.target.value)} required />
+          <Input
+            id="name"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="slug">Slug</Label>
@@ -59,7 +75,7 @@ export function ServiceForm({
             id="slug"
             name="slug"
             value={slug}
-            onChange={e => setSlug(e.target.value)}
+            onChange={(e) => setSlug(e.target.value)}
             placeholder="เช่น basic-wash"
             required
           />
@@ -71,7 +87,7 @@ export function ServiceForm({
             id="detail"
             name="detail"
             rows={5}
-            defaultValue={defaultValues?.detail ?? ''}
+            defaultValue={defaultValues?.detail ?? ""}
             placeholder={`เช่น
 ล้างภายนอกด้วยโฟมพิเศษ
 ดูดฝุ่นภายในรถ
@@ -81,11 +97,23 @@ export function ServiceForm({
 
         <div className="grid gap-2">
           <Label htmlFor="priceFrom">ราคาเริ่ม</Label>
-          <Input id="priceFrom" name="priceFrom" type="number" min={0} defaultValue={defaultValues?.priceFrom ?? ''} />
+          <Input
+            id="priceFrom"
+            name="priceFrom"
+            type="number"
+            min={0}
+            defaultValue={defaultValues?.priceFrom ?? ""}
+          />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="priceTo">ราคาสูงสุด</Label>
-          <Input id="priceTo" name="priceTo" type="number" min={0} defaultValue={defaultValues?.priceTo ?? ''} />
+          <Input
+            id="priceTo"
+            name="priceTo"
+            type="number"
+            min={0}
+            defaultValue={defaultValues?.priceTo ?? ""}
+          />
         </div>
 
         <div className="grid gap-2">
@@ -96,7 +124,7 @@ export function ServiceForm({
             type="number"
             min={1}
             placeholder="เช่น 45 หรือ 90"
-            defaultValue={(defaultValues as any)?.durationMinutes ?? ''}
+            defaultValue={(defaultValues as any)?.durationMinutes ?? ""}
           />
         </div>
 
@@ -107,16 +135,26 @@ export function ServiceForm({
             name="imageUrl"
             placeholder="https://..."
             value={img}
-            onChange={e => setImg(e.target.value)}
+            onChange={(e) => setImg(e.target.value)}
           />
-          {img ? (
+          {img && (
             <div className="rounded border p-2">
-              <div className="text-xs text-muted-foreground mb-2">พรีวิวรูปปก</div>
-              <div className="h-40 w-full overflow-hidden rounded">
-                <img src={img} alt="cover" className="h-full w-full object-cover" />
+              <div className="text-xs text-muted-foreground mb-2">
+                พรีวิวรูปปก
+              </div>
+              <div className="aspect-video w-full overflow-hidden rounded bg-muted flex items-center justify-center">
+                <img
+                  src={img}
+                  alt="preview"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "/fallback.jpg"; // fallback รูป (คุณต้องมีรูปนี้ใน public/)
+                  }}
+                  className="h-full w-full object-cover"
+                />
               </div>
             </div>
-          ) : null}
+          )}
         </div>
 
         <div className="grid gap-2">
@@ -126,22 +164,29 @@ export function ServiceForm({
             name="videoUrl"
             placeholder="https://..."
             value={vid}
-            onChange={e => setVid(e.target.value)}
+            onChange={(e) => setVid(e.target.value)}
           />
-          {vid ? (
+          {vid && (
             <div className="rounded border p-2">
-              <div className="text-xs text-muted-foreground mb-2">พรีวิววิดีโอ</div>
-              <div className="h-40 w-full overflow-hidden rounded bg-black">
-                <video src={vid} className="h-full w-full object-cover" controls />
+              <div className="text-xs text-muted-foreground mb-2">
+                พรีวิววิดีโอ
+              </div>
+              <div className="aspect-video w-full overflow-hidden rounded bg-black">
+                <video
+                  src={vid}
+                  controls
+                  className="h-full w-full object-cover"
+                  onError={() => alert("ไม่สามารถโหลดวิดีโอได้")}
+                />
               </div>
             </div>
-          ) : null}
+          )}
         </div>
       </div>
 
       <Button type="submit" disabled={isPending}>
-        {isPending ? 'กำลังบันทึก...' : submitText}
+        {isPending ? "กำลังบันทึก..." : submitText}
       </Button>
     </form>
-  )
+  );
 }

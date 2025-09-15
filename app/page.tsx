@@ -44,7 +44,7 @@ export default async function StoresPage({
   return (
     <>
       <Navbar />
-      <div className="container mx-auto max-w-6xl px-4 py-6">
+      <div className="flex flex-col container mx-auto max-w-6xl px-4 py-6">
         <StoreFilters />
         <h1 className="text-2xl font-bold mb-4">ร้านทั้งหมด ({total})</h1>
 
@@ -52,55 +52,60 @@ export default async function StoresPage({
           {items.map((s) => {
             return (
               <Link key={s.id} href={`/stores/${s.id}`}>
-                <Card className="hover:shadow-sm transition overflow-hidden">
-                  {/* รูปปก */}
-                  <div className="w-full aspect-[16/9] overflow-hidden">
+                <Card className="hover:shadow-sm transition overflow-hidden flex flex-col h-full">
+                  {/* รูป + overlay ซ้าย/ขวาบน (คงของเดิม) */}
+                  <div className="relative w-full aspect-[16/9] overflow-hidden">
                     <img
                       src={s.imageUrl || "/images/store-default.jpg"}
                       alt={s.name}
-                      className="h-full w-full object-cover"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
                       loading="lazy"
                     />
+                    {/* ซ้ายบน: เปิด/ปิด */}
+                    <div className="absolute left-3 top-3">
+                      <span
+                        className={`inline-flex h-7 items-center rounded-full px-2 text-xs font-medium leading-none
+                        ${s.isOpen ? "bg-emerald-600 text-white" : "bg-red-500 text-white"}`}
+                      >
+                        {s.isOpen ? "เปิด" : "ปิด"}
+                      </span>
+                    </div>
+                    {/* ขวาบน: คะแนน + รีวิว */}
+                    <div className="pointer-events-none absolute right-3 top-3 flex flex-col items-end space-y-1">
+                      <div className="inline-flex h-7 items-center rounded-full bg-black/70 px-2 text-xs text-white leading-none">
+                        <Star className="mr-1 h-3.5 w-3.5 text-yellow-400 fill-current" />
+                        <span className="font-semibold">
+                          {s.rating.toFixed(1)}
+                        </span>
+                      </div>
+                      <div className="inline-flex h-7 items-center rounded-full bg-sky-600 px-2 text-xs text-white leading-none">
+                        {s.reviewsCount.toLocaleString()} รีวิว
+                      </div>
+                    </div>
                   </div>
 
-                  <CardContent className="p-5">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h2 className="text-lg font-semibold">{s.name}</h2>
-                          <Badge variant={s.isOpen ? "default" : "secondary"}>
-                            {s.isOpen ? "เปิด" : "ปิด"}
-                          </Badge>
-                        </div>
-
-                        <div className="mt-2 space-y-1 text-sm text-muted-foreground">
-                          <div className="flex items-start gap-2">
-                            <MapPin className="h-4 w-4 mt-0.5" />
-                            <span className="line-clamp-2">{s.address}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Phone className="h-4 w-4" />
-                            <span>{s.phone}</span>
-                          </div>
-                          {s.hours ? (
-                            <div className="flex items-center gap-2">
-                              <Clock className="h-4 w-4" />
-                              <span>{s.hours}</span>
-                            </div>
-                          ) : null}
-                        </div>
+                  {/* เนื้อหาใต้รูป */}
+                  <CardContent className=" flex flex-col flex-1">
+                    {/* ชื่อ + ที่อยู่ */}
+                    <h2 className="text-lg font-semibold mb-2">{s.name}</h2>
+                    <div className="space-y-1 text-sm text-muted-foreground">
+                      <div className="flex items-start gap-2">
+                        <MapPin className="h-4 w-4 mt-0.5" />
+                        <span>{s.address}</span>
                       </div>
+                    </div>
 
-                      <div className="text-right">
-                        <div className="flex items-center justify-end gap-1">
-                          <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                          <span className="font-medium">
-                            {s.rating.toFixed(1)}
-                          </span>
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          {s.reviewsCount.toLocaleString()} รีวิว
-                        </div>
+                    {/* แถบล่าง: ติดก้นการ์ดเสมอ */}
+                    <div className="mt-auto pt-3 border-t border-white/10 flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4" />
+                        <span>{s.hours || "-"}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Phone className="h-4 w-4" />
+                        <span>{s.phone || "-"}</span>
                       </div>
                     </div>
                   </CardContent>

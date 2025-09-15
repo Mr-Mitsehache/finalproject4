@@ -71,6 +71,7 @@ model Store {
   updatedAt DateTime @updatedAt
 
   @@index([isOpen, rating])
+  @@index([userId])
 }
 
 model Service {
@@ -84,8 +85,8 @@ model Service {
   detail    String?
   priceFrom Int?
   priceTo   Int?
-  imageUrl        String? @db.VarChar(2048)
-  videoUrl        String? @db.VarChar(2048)
+  imageUrl        String? @db.Text
+  videoUrl        String? @db.Text
   durationMinutes Int?    // ระยะเวลา (นาที)
   isActive Boolean @default(true)
 
@@ -95,8 +96,9 @@ model Service {
   updatedAt DateTime @updatedAt
 
   // กัน slug ซ้ำในร้านเดียวกัน
-  @@unique([storeId, slug])
   @@unique([id, storeId])
+  @@unique([storeId, slug])
+  @@index([storeId, isActive])
 }
 
 model Review {
@@ -111,6 +113,8 @@ model Review {
   mediaUrl  String?  @db.VarChar(2048)
   mediaKind ReviewMediaKind?
   createdAt DateTime @default(now())
+
+  @@index([storeId, date])
 }
 
 model Booking {
