@@ -1,10 +1,16 @@
-//components\reviews\review-dialog-button.tsx
 'use client'
 
 import { useState, useCallback } from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { ReviewForm } from './review-form'
+import { MessageSquarePlus } from 'lucide-react'
 
 type FormState = { ok?: boolean; error?: string }
 
@@ -21,13 +27,30 @@ export function ReviewDialogButton({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>เพิ่มรีวิว</Button>
+        <Button
+          className="
+            inline-flex items-center gap-2 font-semibold
+            bg-red-500 hover:bg-red-600 text-white
+            dark:bg-blue-600 dark:hover:bg-blue-700
+            shadow-md transition-all
+          "
+        >
+          <MessageSquarePlus className="h-4 w-4" />
+          เพิ่มรีวิว
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>เพิ่มรีวิว</DialogTitle>
+          <DialogTitle className="flex items-center gap-2 text-lg font-bold">
+            <MessageSquarePlus className="h-5 w-5 text-primary" />
+            เพิ่มรีวิวใหม่
+          </DialogTitle>
         </DialogHeader>
-        <ReviewForm storeId={storeId} action={action} onSuccess={handleSuccess} />
+        <ReviewForm
+          storeId={storeId}
+          action={action}
+          onSuccess={handleSuccess}
+        />
       </DialogContent>
     </Dialog>
   )

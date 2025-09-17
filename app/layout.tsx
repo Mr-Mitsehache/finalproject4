@@ -4,6 +4,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Providers from "@/app/providers";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
+import { inter, jakarta } from '@/lib/fonts'
+import { UIProvider } from '@/components/providers/ui-provider'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,15 +25,17 @@ export const metadata: Metadata = {
 export default function RootLayout({children,}: {  children: React.ReactNode;}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      ><ThemeProvider
+      {/* <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}> */}
+      <body className={`${inter.variable} ${jakarta.variable} font-sans antialiased`}>
+        <UIProvider>
+        <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
         <Providers>{children}</Providers></ThemeProvider>
+        </UIProvider>
       </body>
     </html>
   );

@@ -1,4 +1,3 @@
-// app/login/page.tsx
 "use client";
 
 import { FormEvent, useState } from "react";
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
@@ -53,13 +53,17 @@ export default function LoginPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background/50 dark:bg-black/10 flex items-center justify-center px-4 py-12">
+      <main className="min-h-screen flex items-center justify-center px-4 py-12 bg-plain">
         <div className="w-full max-w-md">
-          <Card className="backdrop-blur-sm bg-white/70 dark:bg-slate-900/50 border border-border shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-xl">ยินดีต้อนรับกลับมา 👋</CardTitle>
-              <CardDescription>
-                เข้าสู่ระบบเพื่อไปต่อ — เราเก็บฟังก์ชันเดิมไว้ทั้งหมด
+          <Card className="backdrop-blur-sm border shadow-xl 
+                           border-red-200 bg-white/70 
+                           dark:border-blue-500/50 dark:bg-zinc-900/70">
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl font-extrabold tracking-wide metal-text">
+                เข้าสู่ระบบ
+              </CardTitle>
+              <CardDescription className="text-sm text-zinc-600 dark:text-zinc-400">
+                ยินดีต้อนรับกลับมา เข้าสู่ระบบเพื่อจัดการร้านและบริการ
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -122,16 +126,22 @@ export default function LoginPage() {
 
                 {/* Error */}
                 {error && (
-                  <div className="text-sm text-red-600 bg-red-100 border border-red-300 rounded-md p-2">
+                  <Badge
+                    variant="destructive"
+                    className="block w-full text-center py-2"
+                  >
                     {error}
-                  </div>
+                  </Badge>
                 )}
               </form>
 
               {/* Footer */}
               <div className="mt-6 text-center text-sm text-muted-foreground">
                 <span>ยังไม่มีบัญชี? </span>
-                <Link href="/register" className="font-medium underline hover:text-foreground">
+                <Link
+                  href="/register"
+                  className="font-medium underline hover:text-foreground"
+                >
                   สมัครสมาชิก
                 </Link>
               </div>

@@ -1,8 +1,14 @@
+/* =========================================================
+   GLOBAL THEME – AUTO / MOTORSPORT
+   ========================================================= */
+
+/* Tailwind + animate */
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
+/* ========= Base Theme Tokens ========= */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -42,37 +48,40 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ========= Light Mode ========= */
 :root {
   --radius: 0.625rem;
 
-  /* 💡 Base Palette: ขาว ดำ แดง ฟ้า */
-  --background: oklch(0.98 0 0); /* ขาว */
-  --foreground: oklch(0.15 0 0); /* ดำ */
-  --primary: oklch(0.75 0.15 250); /* ฟ้า */ 
-  --primary-foreground: oklch(0.98 0 0); /* ขาวบนแดง */
-  --secondary: oklch(0.65 0.25 27); /* แดง */
-  --secondary-foreground: oklch(0.98 0 0); /* ขาวบนฟ้า */
+ /* Light mode: ขาว/แดง */
+  --background: oklch(0.98 0 0);    /* ขาว */
+  --foreground: oklch(0.15 0 0);    /* ดำ */
 
-  --muted: oklch(0.94 0 0); /* เทาอ่อน */
-  --muted-foreground: oklch(0.35 0 0); /* เทาเข้ม */
+  --primary: oklch(0.65 0.25 27);   /* แดงสด */
+  --primary-foreground: oklch(0.98 0 0); /* ขาวบนแดง */
+
+  --secondary: oklch(0.4 0 0);      /* เทาเข้ม */
+  --secondary-foreground: oklch(0.98 0 0); /* ขาวบนเทา */
+
+  --muted: oklch(0.94 0 0);
+  --muted-foreground: oklch(0.35 0 0);
 
   --accent: var(--secondary);
   --accent-foreground: var(--secondary-foreground);
 
-  --destructive: oklch(0.55 0.25 27); /* แดงเข้ม */
-  --border: oklch(0.9 0 0); /* เทา */
+  --destructive: oklch(0.55 0.25 27);
+  --border: oklch(0.9 0 0);
   --input: oklch(0.9 0 0);
   --ring: oklch(0.6 0 0);
 
   --card: var(--background);
   --card-foreground: var(--foreground);
 
-  /* charts & sidebar */
+  /* Charts & sidebar */
   --chart-1: var(--primary);
   --chart-2: var(--secondary);
-  --chart-3: oklch(0.3 0 0); /* ดำอ่อน */
-  --chart-4: oklch(0.6 0.1 250); /* ฟ้าอ่อน */
-  --chart-5: oklch(0.5 0.18 27); /* แดงรอง */
+  --chart-3: oklch(0.3 0 0);
+  --chart-4: oklch(0.6 0.1 250);
+  --chart-5: oklch(0.5 0.18 27);
 
   --sidebar: var(--background);
   --sidebar-foreground: var(--foreground);
@@ -82,30 +91,38 @@
   --sidebar-accent-foreground: var(--accent-foreground);
   --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
+
+  /* Custom Neon + Metallic */
+  --neon-red: oklch(0.65 0.25 27);
+  --neon-blue: oklch(0.75 0.15 250);
+  --metal-dark: oklch(0.2 0 0);
+  --metal-light: oklch(0.85 0 0);
 }
 
+/* ========= Dark Mode ========= */
 .dark {
-  --background: oklch(0.1 0 0); /* ดำ */
-  --foreground: oklch(0.98 0 0); /* ขาว */
+  /* Dark mode: ดำ/ฟ้า */
+  --background: oklch(0.12 0 0);    /* ดำเข้ม */
+  --foreground: oklch(0.95 0 0);    /* ขาว/เทาอ่อน */
+
+  --primary: oklch(0.75 0.15 250);  /* ฟ้าสว่าง */
+  --primary-foreground: oklch(0.1 0 0); /* ดำบนฟ้า */
+
+  --secondary: oklch(0.6 0 0);      /* เทาอ่อน */
+  --secondary-foreground: oklch(0.1 0 0); /* ดำบนเทา */
+  
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.85 0 0);
 
   --card: oklch(0.12 0 0);
   --card-foreground: var(--foreground);
   --popover: var(--card);
   --popover-foreground: var(--foreground);
 
-  --primary: oklch(0.85 0.15 27); /* แดงสว่าง */
-  --primary-foreground: oklch(0.15 0 0); /* ดำบนแดง */
-
-  --secondary: oklch(0.85 0.12 250); /* ฟ้าสว่าง */
-  --secondary-foreground: oklch(0.15 0 0); /* ดำบนฟ้า */
-
-  --muted: oklch(0.2 0 0);
-  --muted-foreground: oklch(0.85 0 0);
-
   --accent: var(--secondary);
   --accent-foreground: var(--secondary-foreground);
 
-  --destructive: oklch(0.6 0.2 27); /* แดง */
+  --destructive: oklch(0.6 0.2 27);
   --border: oklch(0.3 0 0);
   --input: oklch(0.25 0 0);
   --ring: oklch(0.8 0 0);
@@ -126,15 +143,60 @@
   --sidebar-ring: var(--ring);
 }
 
+/* ========= Base Layer ========= */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground transition-colors duration-300 ease-in-out;
   }
+
+  /* Light mode: carbon fiber ลายเทาอ่อนบนพื้นขาว */
+  :root body {
+    background-color: var(--background);
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        rgba(0,0,0,0.06) 0px,
+        rgba(0,0,0,0.06) 2px,
+        transparent 2px,
+        transparent 6px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        rgba(0,0,0,0.06) 0px,
+        rgba(0,0,0,0.06) 2px,
+        transparent 2px,
+        transparent 6px
+      );
+    background-size: 8px 8px;
+  }
+
+  /* Dark mode: carbon fiber ลายเทาเข้มบนพื้นดำ */
+  .dark body {
+    background-color: var(--background);
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.02) 0px,
+        rgba(255,255,255,0.02) 2px,
+        transparent 2px,
+        transparent 6px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        rgba(255,255,255,0.02) 0px,
+        rgba(255,255,255,0.02) 2px,
+        transparent 2px,
+        transparent 6px
+      );
+    background-size: 8px 8px;
+  }
 }
 
+/* ========= Components Layer ========= */
 @layer components {
   .container {
     @apply px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mx-auto max-w-screen-xl;
@@ -144,3 +206,149 @@
     @apply bg-card text-card-foreground rounded-lg shadow-md p-6;
   }
 }
+
+/* ========= Utilities Layer ========= */
+@layer utilities {
+  /* Neon Effects */
+  .neon-red {
+    box-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red);
+  }
+  .neon-blue {
+    box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+  }
+
+  /* Metallic Gradient Text */
+  .metal-text {
+    background: linear-gradient(90deg, var(--metal-light), var(--metal-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Button-like Glow Border */
+  .glow-border {
+    border: 1px solid var(--neon-blue);
+    box-shadow: 0 0 8px var(--neon-blue);
+  }
+
+  /* 🚗 Plain background (ปิดลายคาร์บอน) */
+  .bg-plain {
+    background-image: none !important;
+    background-color: var(--background) !important;
+  }
+
+  /* Skeleton shimmer */
+  .skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .skeleton-shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.08),
+      transparent
+    );
+    animation: shimmer 1.5s infinite;
+  }
+
+  .skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .skeleton-shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.08),
+      transparent
+    );
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    100% {
+      left: 150%;
+    }
+  }
+
+  .spinner-ring {
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--neon-blue);
+    border-right-color: var(--neon-red);
+    animation: spin 1.2s linear infinite;
+    box-shadow: 0 0 8px var(--neon-blue), 0 0 12px var(--neon-red);
+  }
+
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Semi-circle Gauge */
+  .gauge {
+    position: relative;
+    width: 120px;
+    height: 60px; /* ครึ่งวงกลม */
+    border-radius: 120px 120px 0 0;
+    border: 6px solid transparent;
+    border-top-color: var(--neon-blue);
+    border-left-color: var(--neon-red);
+    border-right-color: var(--neon-red);
+    overflow: hidden;
+    box-shadow: 0 0 12px var(--neon-blue), 0 0 18px var(--neon-red);
+  }
+
+  /* เข็ม */
+  .gauge-needle {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    height: 55%;
+    background: var(--neon-red);
+    transform-origin: bottom center;
+    animation: needle-sweep 1.5s ease-in-out infinite alternate;
+    box-shadow: 0 0 8px var(--neon-red);
+  }
+
+  @keyframes needle-sweep {
+    0% {
+      transform: rotate(-60deg);
+      background: var(--neon-blue);
+      box-shadow: 0 0 8px var(--neon-blue);
+    }
+    100% {
+      transform: rotate(60deg);
+      background: var(--neon-red);
+      box-shadow: 0 0 8px var(--neon-red);
+    }
+  }
+
+  .glow-icon {
+    filter: drop-shadow(0 0 6px var(--primary))
+            drop-shadow(0 0 12px var(--primary));
+  }
+  /* Glow สำหรับ input border */
+  .glow-input:focus {
+    box-shadow:
+      0 0 6px var(--primary),
+      0 0 12px var(--primary),
+      inset 0 0 4px var(--primary);
+    border-color: var(--primary) !important;
+  }
+}
+

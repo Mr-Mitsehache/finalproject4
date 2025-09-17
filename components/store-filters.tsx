@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { X, Search, Settings2, MapPin, Filter } from "lucide-react";
 
 const MIN_DISTANCE = 0;
 const MAX_DISTANCE = 20;
@@ -90,32 +90,83 @@ export function StoreFilters({ basePath = "/" }: { basePath?: string }) {
   };
 
   return (
-    <div className="mb-6 flex flex-col justify-end h-64 bg-neutral-900">
-      {/* Search */}
-      <div className="flex justify-center ">
-        <Input
-          placeholder="ค้นหาร้าน..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="w-1/2 h-10"
-        />
+    <div
+      className="
+    mb-6 flex flex-col gap-6 p-6 rounded-2xl
+    border border-border shadow-lg backdrop-blur-sm
+    bg-gradient-to-br from-white/90 to-red-50/70
+    dark:from-black/70 dark:to-blue-950/40
+    transition-all
+  "
+    >
+      {/* Heading */}
+      <div className="text-center space-y-1">
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground flex items-center justify-center gap-2">
+          ยินดีต้อนรับสู่ <span className="text-primary">แพลตฟอร์มของผม</span>
+        </h1>
+        <h2 className="text-muted-foreground text-sm sm:text-base flex items-center justify-center gap-2">
+          <Settings2 className="h-4 w-4 text-muted-foreground" />
+          เริ่มค้นหาร้านที่ถูกใจได้เลย
+        </h2>
       </div>
 
-      <div className="flex justify-normal mt-18 ml-10 ">
+      {/* Search */}
+      <div className="flex justify-center relative">
+        <div className="relative w-full sm:w-2/3 lg:w-1/2">
+          <Search
+            className="
+      absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5
+      text-primary transition-all duration-300
+      group-focus-within:scale-110
+      glow-icon
+    "
+          />
+          <Input
+  placeholder="ค้นหาร้าน..."
+  value={query}
+  onChange={(e) => setQuery(e.target.value)}
+  className="
+    h-12 pl-10 pr-4 rounded-xl
+    border border-border shadow-inner
+    transition-all duration-300
+    focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]
+    glow-input
+  "
+/>
+
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div className="flex flex-wrap items-center gap-6 justify-center sm:justify-center">
+        <Filter className="h-6 w-6 text-primary" />
         {/* Open Only */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <Switch
             id="open-switch"
             checked={openOnly}
             onCheckedChange={setOpenOnly}
           />
-          <Label htmlFor="open-switch">แสดงเฉพาะร้านที่เปิด</Label>
+          <Label
+            htmlFor="open-switch"
+            className="text-sm font-medium text-foreground"
+          >
+            แสดงเฉพาะร้านที่เปิด
+          </Label>
         </div>
 
         {/* Sort */}
-        <div className="flex items-center ml-4">
+        <div className="flex items-center gap-2">
+          <Settings2 className="h-4 w-4 text-muted-foreground" />
           <Select value={sort} onValueChange={setSort}>
-            <SelectTrigger>
+            <SelectTrigger
+              className="
+            rounded-lg px-3 h-10
+            border border-border shadow-sm
+            focus:ring-2 focus:ring-primary focus:border-primary
+            dark:focus:ring-blue-400 dark:focus:border-blue-400
+          "
+            >
               <SelectValue placeholder="เรียงลำดับ" />
             </SelectTrigger>
             <SelectContent>
@@ -126,41 +177,52 @@ export function StoreFilters({ basePath = "/" }: { basePath?: string }) {
           </Select>
         </div>
 
-        {/* Distance with + / − and Clear */}
-        <div className="flex items-center ml-4">
-          <Label htmlFor="distance" className="whitespace-nowrap">
+        {/* Distance */}
+        <div className="flex items-center gap-3">
+          <Label
+            htmlFor="distance"
+            className="whitespace-nowrap text-sm text-foreground flex items-center gap-1"
+          >
+            <MapPin className="h-4 w-4 text-primary dark:text-blue-400" />
             ระยะทาง (กม.)
           </Label>
 
-          <div className="flex items-center">
-            <Input
-              id="distance"
-              type="number"
-              inputMode="numeric"
-              min={MIN_DISTANCE}
-              max={MAX_DISTANCE}
-              step={STEP}
-              className="w-16"
-              value={distance}
-              onChange={(e) => setDistance(clamp(Number(e.target.value)))}
-              onBlur={(e) => {
-                const v = clamp(Number(e.target.value));
-                if (v !== distance) setDistance(v);
-              }}
-              placeholder="กม."
-            />
+          <Input
+            id="distance"
+            type="number"
+            inputMode="numeric"
+            min={MIN_DISTANCE}
+            max={MAX_DISTANCE}
+            step={STEP}
+            className="
+          w-20 rounded-lg h-10 px-2
+          border border-border shadow-sm
+          focus:ring-2 focus:ring-primary focus:border-primary
+          dark:focus:ring-blue-400 dark:focus:border-blue-400
+        "
+            value={distance}
+            onChange={(e) => setDistance(clamp(Number(e.target.value)))}
+            onBlur={(e) => {
+              const v = clamp(Number(e.target.value));
+              if (v !== distance) setDistance(v);
+            }}
+            placeholder="กม."
+          />
 
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={clearDistance}
-              aria-label="ล้างค่า"
-              title="ล้างค่า"
-            >
-              <X className="h-4 w-4" />
-              ล้างค่า
-            </Button>
-          </div>
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={clearDistance}
+            aria-label="ล้างค่า"
+            title="ล้างค่า"
+            className="
+          text-primary hover:bg-primary/10
+          dark:text-blue-400 dark:hover:bg-blue-500/20
+        "
+          >
+            <X className="h-4 w-4" />
+            ล้างค่า
+          </Button>
         </div>
       </div>
     </div>

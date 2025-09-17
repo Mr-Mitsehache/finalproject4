@@ -1,4 +1,3 @@
-// app\register\page.tsx
 "use client";
 
 import { FormEvent, useState } from "react";
@@ -14,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 export default function RegisterPage() {
@@ -58,20 +58,30 @@ export default function RegisterPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background/60 flex items-center justify-center px-4 py-12">
+      <main className="min-h-screen flex items-center justify-center px-4 py-12 bg-plain">
         <div className="w-full max-w-md">
-          <Card className="bg-white/80 dark:bg-slate-900/60 border border-border shadow-xl backdrop-blur-md">
+          <Card className="backdrop-blur-sm border shadow-xl 
+                           border-red-200 bg-white/70 
+                           dark:border-blue-500/50 dark:bg-zinc-900/70">
             <CardHeader className="text-center">
-              <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-white dark:bg-muted shadow">
-                <User className="h-6 w-6 text-foreground" />
+              {/* วงกลม icon ตกแต่ง */}
+              <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full 
+                              border border-red-400 bg-white shadow-md 
+                              dark:border-blue-500 dark:bg-zinc-800 
+                              neon-blue">
+                <User className="h-6 w-6 text-red-600 dark:text-blue-400" />
               </div>
-              <CardTitle className="text-xl">สมัครสมาชิก</CardTitle>
-              <CardDescription>สร้างบัญชีใหม่เพื่อเริ่มต้น</CardDescription>
+              <CardTitle className="text-2xl font-extrabold tracking-wide metal-text">
+                สมัครสมาชิก
+              </CardTitle>
+              <CardDescription className="text-sm text-zinc-600 dark:text-zinc-400">
+                สร้างบัญชีใหม่เพื่อเริ่มต้นใช้งาน
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={onSubmit} className="space-y-4">
                 {/* Name */}
-                <div>
+                <div className="space-y-1">
                   <label htmlFor="name" className="text-sm font-medium">
                     ชื่อ
                   </label>
@@ -91,7 +101,7 @@ export default function RegisterPage() {
                 </div>
 
                 {/* Email */}
-                <div>
+                <div className="space-y-1">
                   <label htmlFor="email" className="text-sm font-medium">
                     อีเมล
                   </label>
@@ -111,7 +121,7 @@ export default function RegisterPage() {
                 </div>
 
                 {/* Password */}
-                <div>
+                <div className="space-y-1">
                   <label htmlFor="password" className="text-sm font-medium">
                     รหัสผ่าน
                   </label>
@@ -146,9 +156,12 @@ export default function RegisterPage() {
 
                 {/* Error */}
                 {error && (
-                  <div className="text-sm text-red-600 bg-red-100 border border-red-300 rounded-md p-2">
+                  <Badge
+                    variant="destructive"
+                    className="block w-full text-center py-2"
+                  >
                     {error}
-                  </div>
+                  </Badge>
                 )}
               </form>
 

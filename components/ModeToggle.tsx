@@ -1,4 +1,3 @@
-//components\ModeToggle.tsx
 "use client";
 
 import * as React from "react";
@@ -10,12 +9,17 @@ export function ModeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
-  // กัน hydration mismatch บน Next.js
   React.useEffect(() => setMounted(true), []);
   if (!mounted) {
     return (
-      <Button variant="outline" size="icon" aria-label="Toggle theme" disabled>
-        <Sun className="h-[1.2rem] w-[1.2rem]" />
+      <Button
+        variant="outline"
+        size="icon"
+        aria-label="Toggle theme"
+        disabled
+        className="rounded-full glow-border bg-zinc-800/60"
+      >
+        <Sun className="h-5 w-5 text-yellow-400" />
       </Button>
     );
   }
@@ -28,16 +32,27 @@ export function ModeToggle() {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon"
       onClick={toggleTheme}
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
       aria-pressed={isDark}
-      //className="text-foreground"
+      className={`relative rounded-full border transition-all 
+        ${isDark 
+          ? "border-blue-500/60 bg-black/70 hover:bg-blue-600/20 neon-blue" 
+          : "border-yellow-400/70 bg-white/80 hover:bg-yellow-400/70"} 
+      `}
     >
-      {/* แสดง/ซ่อนไอคอนด้วย class ของ shadcn */}
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-black"/>
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 dark:text-white"/>
+      {/* Sun */}
+      <Sun
+        className={`h-5 w-5 text-black transition-all duration-300
+          ${isDark ? "rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"}`}
+      />
+      {/* Moon */}
+      <Moon
+        className={`absolute h-5 w-5 text-blue-400 transition-all duration-300
+          ${isDark ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0"}`}
+      />
       <span className="sr-only">Toggle theme</span>
     </Button>
   );
